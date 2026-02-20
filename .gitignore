@@ -1,15 +1,22 @@
-*.iml
+# Archivos de construcción (generados automáticamente)
 .gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
 /build
+/*/build
+
+# Configuración local de tu PC (NUNCA subir esto, tiene la ruta de tu SDK)
+local.properties
+
+# Archivos de la IDE (Android Studio / IntelliJ)
+.idea/caches
+.idea/libraries
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+*.iml
+
+# Archivos de sistema y temporales
+.DS_Store
 /captures
 .externalNativeBuild
 .cxx
-local.properties

@@ -1,0 +1,120 @@
+package com.example.proyectoindiv;
+
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+public class DatabaseHelper extends SQLiteOpenHelper {
+
+    // 1. Definimos el nombre y la versión de la base de datos
+    private static final String DATABASE_NAME = "LudotecaDB";
+    private static final int DATABASE_VERSION = 2; // Lo subimos a 2 porque hemos cambiado la tabla
+
+    // 2. Definimos el nombre de la tabla y sus columnas
+    public static final String TABLE_JUEGOS = "juegos";
+    public static final String COLUMN_ID = "id";
+    public static final String COLUMN_NOMBRE = "nombre";
+    public static final String COLUMN_JUGADORES = "jugadores"; // Ej: "2-4"
+    public static final String COLUMN_DURACION = "duracion"; // En minutos
+    public static final String COLUMN_JUGADO = "jugado"; // 0 = No, 1 = Sí
+    public static final String COLUMN_PROPIEDAD = "propiedad"; // 0 = Wishlist, 1 = Colección
+
+    // 3. Constructor
+    public DatabaseHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    // 4. onCreate se ejecuta la PRIMERA vez que se abre la app
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        // Creamos la tabla con la nueva columna
+        String createTable = "CREATE TABLE " + TABLE_JUEGOS + " (" +
+                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_NOMBRE + " TEXT, " +
+                COLUMN_JUGADORES + " TEXT, " +
+                COLUMN_DURACION + " INTEGER, " +
+                COLUMN_JUGADO + " INTEGER, " +
+                COLUMN_PROPIEDAD + " INTEGER)";
+
+        db.execSQL(createTable);
+
+        // PRECARGAMOS ALGUNOS JUEGOS
+        // Catan: Lo tienes y lo has jugado
+        insertarJuegoInicial(db, "Catan", "3-4", 90, 1, 1);
+        // Pandemic: Lo tienes, pero no lo has jugado todavía
+        insertarJuegoInicial(db, "Pandemic", "2-4", 60, 0, 1);
+        // Gloomhaven: Lo quieres comprar (Wishlist), no lo tienes ni lo has jugado
+        insertarJuegoInicial(db, "Gloomhaven", "1-4", 120, 0, 0);
+    }
+
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_JUEGOS);
+        onCreate(db);
+    }
+
+    // Método auxiliar actualizado
+    private void insertarJuegoInicial(SQLiteDatabase db, String nombre, String jugadores, int duracion, int jugado, int propiedad) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NOMBRE, nombre);
+        values.put(COLUMN_JUGADORES, jugadores);
+        values.put(COLUMN_DURACION, duracion);
+        values.put(COLUMN_JUGADO, jugado);
+        values.put(COLUMN_PROPIEDAD, propiedad);
+        db.insert(TABLE_JUEGOS, null, values);
+    }
+
+    /**
+     * Recupera todos los juegos almacenados en la base de datos local.
+     * @return Una lista de objetos JuegoMesa.
+     */
+    public java.util.List<JuegoMesa> obtenerTodosLosJuegos() {
+        java.util.List<JuegoMesa> listaJuegos = new java.util.ArrayList<>();
+        // Abrimos la base de datos en modo lectura
+        android.database.sqlite.SQLiteDatabase db = this.getReadableDatabase();
+
+        // Ejecutamos la consulta SQL para obtener todo el contenido de la tabla
+        android.database.Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_JUEGOS, null);
+
+        // Recorremos los resultados y vamos creando los objetos JuegoMesa
+        if (cursor.moveToFirst()) {
+            do {
+                JuegoMesa juego = new JuegoMesa(
+                        cursor.getInt(0), // id
+                        cursor.getString(1), // nombre
+                        cursor.getString(2), // jugadores
+                        cursor.getInt(3), // duracion
+                        cursor.getInt(4), // jugado
+                        cursor.getInt(5)  // propiedad
+                );
+                listaJuegos.add(juego);
+            } while (cursor.moveToNext());
+        }
+
+        // Cerramos el cursor y la base de datos para liberar memoria
+        cursor.close();
+        db.close();
+
+        return listaJuegos;
+    }
+
+    /**
+     * Actualiza los datos de un juego existente en la base de datos.
+     */
+    public void actualizarJuego(int id, String nombre, String jugadores, int duracion, int jugado) {
+        android.database.sqlite.SQLiteDatabase db = this.getWritableDatabase();
+        android.content.ContentValues values = new android.content.ContentValues();
+
+        values.put(COLUMN_NOMBRE, nombre);
+        values.put(COLUMN_JUGADORES, jugadores);
+        values.put(COLUMN_DURACION, duracion);
+        values.put(COLUMN_JUGADO, jugado);
+
+        // Actualizamos la fila que coincida con el ID
+        db.update(TABLE_JUEGOS, values, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
+        db.close();
+    }
+}

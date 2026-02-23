@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseHelper dbHelper;
     private FloatingActionButton fabAnadirJuego;
     private List<JuegoMesa> miLudoteca;
+    private int modoLista = 1; // Por defecto Ludoteca
 
 
     @Override
@@ -34,7 +35,18 @@ public class MainActivity extends AppCompatActivity {
 
         // 3. Inicializamos la base de datos y obtenemos la lista de juegos
         dbHelper = new DatabaseHelper(this);
-        miLudoteca = dbHelper.obtenerTodosLosJuegos();
+        // 1. Leemos qué botón pulsaste en la pantalla de inicio
+        modoLista = getIntent().getIntExtra("MODO_LISTA", 1);
+
+        // 2. Arreglo rápido para que no quede soso arriba (El título de la barra)
+        if (modoLista == 1) {
+            setTitle("🎲 Mi Ludoteca");
+        } else {
+            setTitle("🛒 Mi Wishlist");
+        }
+
+        // 3. Le pedimos a la BBDD solo los juegos de esa lista
+        miLudoteca = dbHelper.obtenerJuegosFiltrados(modoLista);
 
         // 4. Configuramos el adaptador con la lista y se lo asignamos al RecyclerView
         adaptadorJuegos = new JuegoAdapter(miLudoteca);
@@ -69,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                             values.put(DatabaseHelper.COLUMN_JUGADORES, jugadores);
                             values.put(DatabaseHelper.COLUMN_DURACION, duracion);
                             values.put(DatabaseHelper.COLUMN_JUGADO, 0);
-                            values.put(DatabaseHelper.COLUMN_PROPIEDAD, 1);
+                            values.put(DatabaseHelper.COLUMN_PROPIEDAD, modoLista);
 
                             android.database.sqlite.SQLiteDatabase db = dbHelper.getWritableDatabase();
                             db.insert(DatabaseHelper.TABLE_JUEGOS, null, values);
@@ -77,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
                             // Recargamos la lista para que aparezca el nuevo juego al instante
                             miLudoteca.clear();
-                            miLudoteca.addAll(dbHelper.obtenerTodosLosJuegos());
+                            miLudoteca.addAll(dbHelper.obtenerJuegosFiltrados(modoLista));
                             adaptadorJuegos.notifyDataSetChanged();
                         }
                     })
@@ -93,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             // 1. Vaciamos la lista antigua
             miLudoteca.clear();
             // 2. Volvemos a pedirle todos los datos frescos a SQLite
-            miLudoteca.addAll(dbHelper.obtenerTodosLosJuegos());
+            miLudoteca.addAll(dbHelper.obtenerJuegosFiltrados(modoLista));
             // 3. Le chivamos al adaptador que repinte la pantalla
             adaptadorJuegos.notifyDataSetChanged();
         }

@@ -6,6 +6,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.List;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // 1. Definimos el nombre y la versión de la base de datos
@@ -99,6 +101,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
         return listaJuegos;
+    }
+
+    // MÉTODO PARA FILTRAR
+    public List<JuegoMesa> obtenerJuegosFiltrados(int propiedad) {
+        List<JuegoMesa> lista = new java.util.ArrayList<>();
+        android.database.sqlite.SQLiteDatabase db = this.getReadableDatabase();
+
+        // Solo traemos los juegos que coincidan con la propiedad (0 o 1)
+        android.database.Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_JUEGOS + " WHERE " + COLUMN_PROPIEDAD + " = " + propiedad, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                JuegoMesa juego = new JuegoMesa(
+                        cursor.getInt(0), // ID
+                        cursor.getString(1), // Nombre
+                        cursor.getString(2), // Jugadores
+                        cursor.getInt(3), // Duración
+                        cursor.getInt(4), // Jugado
+                        cursor.getInt(5)  // PROPIEDAD
+                );
+                // Si tu JuegoMesa tiene más campos en el constructor, ponlos aquí igual que en obtenerTodosLosJuegos()
+                lista.add(juego);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return lista;
     }
 
     /**

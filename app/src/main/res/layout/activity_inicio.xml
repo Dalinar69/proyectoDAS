@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="32dp"
+    android:gravity="center_horizontal"
+    android:background="@drawable/fondo"
+    android:backgroundTint="#B3000000"
+    android:backgroundTintMode="src_atop"
+    android:fitsSystemWindows="true">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TABLER"
+        android:textSize="56sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:letterSpacing="0.1"
+        android:shadowColor="#000000"
+        android:shadowDx="4"
+        android:shadowDy="4"
+        android:shadowRadius="8"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tu ludoteca en el bolsillo."
+        android:textSize="18sp"
+        android:textColor="#E0E0E0"
+        android:gravity="center" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/btnIrLudoteca"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:text="🎲  IR A MI LUDOTECA"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:backgroundTint="#2A9D8F"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:elevation="8dp"/>
+    <Button
+        android:id="@+id/btnIrWishlist"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:text="🛒  MI WISHLIST"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:backgroundTint="#457B9D"
+        android:textColor="#FFFFFF"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:elevation="8dp"
+        android:layout_marginBottom="40dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1. ¡Añade tus juegos o los que quieras comprar!\n2. Lleva el seguimiento de tu colección.\n3. ¡A jugar!"
+        android:textSize="14sp"
+        android:textColor="#CCCCCC"
+        android:gravity="center"
+        android:lineSpacingExtra="6dp"
+        android:shadowColor="#000000"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="5"
+        android:layout_marginBottom="16dp"/>
+
+</LinearLayout>

@@ -1,10 +1,19 @@
 package com.example.proyectoindiv;
 
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import java.util.List;
 
 /**
@@ -19,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
     private List<JuegoMesa> miLudoteca;
     private int modoLista = 1; // Por defecto Ludoteca
 
+    // Menu y fondo
+    private DrawerLayout drawerLayout;
+    private android.widget.RelativeLayout layoutPrincipal;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +42,30 @@ public class MainActivity extends AppCompatActivity {
         fabAnadirJuego = findViewById(R.id.fabAnadirJuego);
 
         // Enlazamos el fondo principal para poder cambiarlo
-        android.widget.RelativeLayout layoutPrincipal = findViewById(R.id.layoutPrincipal);
+        layoutPrincipal = findViewById(R.id.layoutPrincipal);
+
+        //Menu lateral
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navView = findViewById(R.id.nav_view);
+
+        // Añade el botón de la hamburguesa a la barra
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.abrir_menu, R.string.cerrar_menu);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        // Qué pasa al tocar una opción del menú
+        navView.setNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.nav_ludoteca) {
+                cambiarModo(1);
+            } else if (item.getItemId() == R.id.nav_wishlist) {
+                cambiarModo(0);
+            }
+            drawerLayout.closeDrawer(GravityCompat.START); // Cierra el menú al elegir
+            return true;
+        });
 
         // 2. Configuramos el layout del RecyclerView (lista vertical estándar)
         recyclerViewJuegos.setLayoutManager(new LinearLayoutManager(this));
@@ -39,25 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Leemos qué botón pulsaste en la pantalla de inicio
         modoLista = getIntent().getIntExtra("MODO_LISTA", 1);
-
-        // Creamos la variable booleana para pasársela al Adapter luego
-        boolean esWishlist = (modoLista == 0);
-
-        // Arreglo rápido para que no quede soso arriba y CAMBIO DE FONDO
-        if (modoLista == 1) {
-            setTitle("🎲 Mi Ludoteca");
-            layoutPrincipal.setBackgroundResource(R.drawable.ludoteca); // Fondo Ludoteca
-        } else {
-            setTitle("🛒 Mi Wishlist");
-            layoutPrincipal.setBackgroundResource(R.drawable.fondo_wishlist); // Fondo Wishlist
-        }
-
-        // Le pedimos a la BBDD solo los juegos de esa lista
-        miLudoteca = dbHelper.obtenerJuegosFiltrados(modoLista);
-
-        // 4. Configuramos el adaptador pasándole también si es wishlist o no (esWishlist)
-        adaptadorJuegos = new JuegoAdapter(miLudoteca, esWishlist);
-        recyclerViewJuegos.setAdapter(adaptadorJuegos);
+        cambiarModo(modoLista);
 
         // Configuración del botón flotante para añadir juegos mediante un Diálogo
         fabAnadirJuego.setOnClickListener(v -> {
@@ -121,13 +139,34 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    private void cambiarModo(int nuevoModo) {
+        modoLista = nuevoModo;
+        boolean esWishlist = (modoLista == 0);
+
+        if (modoLista == 1) {
+            getSupportActionBar().setTitle("🎲 Mi Ludoteca");
+            layoutPrincipal.setBackgroundResource(R.drawable.ludoteca);
+        } else {
+            getSupportActionBar().setTitle("🛒 Mi Wishlist");
+            layoutPrincipal.setBackgroundResource(R.drawable.fondo_wishlist);
+        }
+
+        miLudoteca = dbHelper.obtenerJuegosFiltrados(modoLista);
+        adaptadorJuegos = new JuegoAdapter(miLudoteca, esWishlist);
+        recyclerViewJuegos.setAdapter(adaptadorJuegos);
+    }
+
+    private void recargarLista() {
         if (dbHelper != null && miLudoteca != null && adaptadorJuegos != null) {
             miLudoteca.clear();
             miLudoteca.addAll(dbHelper.obtenerJuegosFiltrados(modoLista));
             adaptadorJuegos.notifyDataSetChanged();
         }
     }
-}
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        recargarLista();
+        }
+    }

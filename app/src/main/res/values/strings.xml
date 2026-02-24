@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Tabler</string>
+    <string name="abrir_menu">Abrir menú</string>
+    <string name="cerrar_menu">Cerrar menú</string>
 </resources>

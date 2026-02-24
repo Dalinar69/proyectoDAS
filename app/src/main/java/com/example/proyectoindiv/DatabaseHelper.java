@@ -45,10 +45,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(createTable);
 
         // PRECARGAMOS ALGUNOS JUEGOS
-        // Catan: Lo tienes y lo has jugado
+        // JUEGOS INSERTADOS EN LA LUDOTECA
         insertarJuegoInicial(db, "Catan", "3-4", 90, 1, 1, "24/02/2026");
-        insertarJuegoInicial(db, "Pandemic", "2-4", 60, 1, 1, "");
+        insertarJuegoInicial(db, "Pandemic", "2-4", 60, 1, 1, "03/12/2025");
+        insertarJuegoInicial(db, "Seven Wonders Duel", "2", 30, 1, 1, "04/08/2024");
+        insertarJuegoInicial(db, "Carcassonne", "2-4", 45, 1, 1, "16/09/2025");
+        insertarJuegoInicial(db,"Dune Imperium", "2-4", 90, 1, 1,"24/02/2025");
+        insertarJuegoInicial(db, "Skull King", "2-4", 60, 1, 1, "12/07/2024");
+        insertarJuegoInicial(db, "Splendor", "2-4", 75, 1, 1, "24/02/2025");
+        insertarJuegoInicial(db, "Jaipur", "2", 30, 1, 1, "04/08/2024");
+        insertarJuegoInicial(db, "Exploding Kittens", "2-4", 60, 1, 1, "16/09/2025");
+        insertarJuegoInicial(db, "Monopoly", "2-4", 45, 1, 1, "24/02/2025");
+        insertarJuegoInicial(db, "Ticket to Ride", "2-4", 60, 1, 1, "12/07/2024");
+        insertarJuegoInicial(db, "Scout", "2-4", 75, 1, 1, "24/02/2025");
+        insertarJuegoInicial(db, "The Crew", "2-4", 20, 1, 1, "04/08/2024");
+        insertarJuegoInicial(db, "Risk", "2-4", 45, 1, 1, "27/01/2026");
+        //JUEGOS INSERTADOS EN LA WISHLIST
         insertarJuegoInicial(db, "Gloomhaven", "1-4", 120, 0, 0, "");
+        insertarJuegoInicial(db, "Arnak", "1-4", 60, 0, 0, "");
+        insertarJuegoInicial(db, "Wingspan", "2-4", 60, 0, 0, "");
+        insertarJuegoInicial(db, "Living Forest", "2-4", 90, 0, 0, "");
+        insertarJuegoInicial(db, "Seven Wonders", "2-4", 90, 0, 0, "");
+        insertarJuegoInicial(db, "Brass Birmingham", "2-4", 60, 0, 0, "");
+        insertarJuegoInicial(db, "Terraforming Mars", "2-4", 120, 0, 0, "");
+        insertarJuegoInicial(db, "Dead Cells", "2-4", 60, 0, 0, "");
+        insertarJuegoInicial(db, "Ark Nova", "2-4", 130, 0, 0, "");
     }
 
     public void eliminarJuego(int id) {

@@ -62,6 +62,16 @@ public class MainActivity extends AppCompatActivity {
                 cambiarModo(1);
             } else if (item.getItemId() == R.id.nav_wishlist) {
                 cambiarModo(0);
+            } else if (item.getItemId() == R.id.nav_ajustes) {
+                // Mensaje temporal de relleno
+                android.widget.Toast.makeText(this, "Ajustes en desarrollo 🛠️", android.widget.Toast.LENGTH_SHORT).show();
+            } else if (item.getItemId() == R.id.nav_acerca_de) {
+                // Un diálogo chulo para presumir de proyecto
+                new androidx.appcompat.app.AlertDialog.Builder(this)
+                        .setTitle("Acerca de TABLER")
+                        .setMessage("Gestor de Juegos de Mesa v1.0\n\nDesarrollado por Iker Argulo para el proyecto individual de DAS.\n\n¡Gracias por usarla!")
+                        .setPositiveButton("Cerrar", null)
+                        .show();
             }
             drawerLayout.closeDrawer(GravityCompat.START); // Cierra el menú al elegir
             return true;

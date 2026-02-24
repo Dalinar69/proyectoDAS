@@ -12,7 +12,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // 1. Definimos el nombre y la versión de la base de datos
     private static final String DATABASE_NAME = "LudotecaDB";
-    private static final int DATABASE_VERSION = 2; // Lo subimos a 2 porque hemos cambiado la tabla
+    private static final int DATABASE_VERSION = 3;
 
     // 2. Definimos el nombre de la tabla y sus columnas
     public static final String TABLE_JUEGOS = "juegos";
@@ -22,6 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_DURACION = "duracion"; // En minutos
     public static final String COLUMN_JUGADO = "jugado"; // 0 = No, 1 = Sí
     public static final String COLUMN_PROPIEDAD = "propiedad"; // 0 = Wishlist, 1 = Colección
+    public static final String COLUMN_FECHA = "fecha";
 
     // 3. Constructor
     public DatabaseHelper(Context context) {
@@ -38,17 +39,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_JUGADORES + " TEXT, " +
                 COLUMN_DURACION + " INTEGER, " +
                 COLUMN_JUGADO + " INTEGER, " +
-                COLUMN_PROPIEDAD + " INTEGER)";
+                COLUMN_PROPIEDAD + " INTEGER," +
+                COLUMN_FECHA + " TEXT)";
 
         db.execSQL(createTable);
 
         // PRECARGAMOS ALGUNOS JUEGOS
         // Catan: Lo tienes y lo has jugado
-        insertarJuegoInicial(db, "Catan", "3-4", 90, 1, 1);
-        // Pandemic: Lo tienes, pero no lo has jugado todavía
-        insertarJuegoInicial(db, "Pandemic", "2-4", 60, 0, 1);
-        // Gloomhaven: Lo quieres comprar (Wishlist), no lo tienes ni lo has jugado
-        insertarJuegoInicial(db, "Gloomhaven", "1-4", 120, 0, 0);
+        insertarJuegoInicial(db, "Catan", "3-4", 90, 1, 1, "24/02/2026");
+        insertarJuegoInicial(db, "Pandemic", "2-4", 60, 1, 1, "");
+        insertarJuegoInicial(db, "Gloomhaven", "1-4", 120, 0, 0, "");
+    }
+
+    public void eliminarJuego(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_JUEGOS, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
+        db.close();
     }
 
 
@@ -59,13 +65,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Método auxiliar actualizado
-    private void insertarJuegoInicial(SQLiteDatabase db, String nombre, String jugadores, int duracion, int jugado, int propiedad) {
+    private void insertarJuegoInicial(SQLiteDatabase db, String nombre, String jugadores, int duracion, int jugado, int propiedad, String fecha) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_NOMBRE, nombre);
         values.put(COLUMN_JUGADORES, jugadores);
         values.put(COLUMN_DURACION, duracion);
         values.put(COLUMN_JUGADO, jugado);
         values.put(COLUMN_PROPIEDAD, propiedad);
+        values.put(COLUMN_FECHA, fecha);
         db.insert(TABLE_JUEGOS, null, values);
     }
 
@@ -90,7 +97,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         cursor.getString(2), // jugadores
                         cursor.getInt(3), // duracion
                         cursor.getInt(4), // jugado
-                        cursor.getInt(5)  // propiedad
+                        cursor.getInt(5), // propiedad
+                        cursor.getString(6) //fecha
                 );
                 listaJuegos.add(juego);
             } while (cursor.moveToNext());
@@ -119,7 +127,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         cursor.getString(2), // Jugadores
                         cursor.getInt(3), // Duración
                         cursor.getInt(4), // Jugado
-                        cursor.getInt(5)  // PROPIEDAD
+                        cursor.getInt(5),  // PROPIEDAD
+                        cursor.getString(6) //fecha
                 );
                 // Si tu JuegoMesa tiene más campos en el constructor, ponlos aquí igual que en obtenerTodosLosJuegos()
                 lista.add(juego);
@@ -133,16 +142,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * Actualiza los datos de un juego existente en la base de datos.
      */
-    public void actualizarJuego(int id, String nombre, String jugadores, int duracion, int jugado) {
-        android.database.sqlite.SQLiteDatabase db = this.getWritableDatabase();
-        android.content.ContentValues values = new android.content.ContentValues();
+    public void actualizarJuegoCompleto(int id, String nombre, String jugadores, int duracion, int jugado, int propiedad, String fecha) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
 
         values.put(COLUMN_NOMBRE, nombre);
         values.put(COLUMN_JUGADORES, jugadores);
         values.put(COLUMN_DURACION, duracion);
         values.put(COLUMN_JUGADO, jugado);
+        values.put(COLUMN_PROPIEDAD, propiedad);
+        values.put(COLUMN_FECHA, fecha);
 
-        // Actualizamos la fila que coincida con el ID
         db.update(TABLE_JUEGOS, values, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
         db.close();
     }

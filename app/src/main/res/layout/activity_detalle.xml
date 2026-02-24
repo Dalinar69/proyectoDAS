@@ -1,112 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="20dp"
-    android:fitsSystemWindows="true"
-    android:background="#2C3E50"> <TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Ficha del Juego"
-    android:textSize="28sp"
-    android:textStyle="bold"
-    android:textColor="#ECF0F1"
-    android:gravity="center"
-    android:layout_marginBottom="24dp"
-    android:layout_marginTop="16dp"/>
+    android:background="@drawable/detalles"
+    android:backgroundTint="#80000000"
+    android:backgroundTintMode="src_atop"
+    android:fitsSystemWindows="true">
 
-    <androidx.cardview.widget.CardView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="8dp">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="24dp"
-            android:background="#FFFFFF">
+            android:gravity="center"
+            android:padding="32dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nombre del juego"
-                android:textColor="#7F8C8D"
-                android:textSize="14sp"/>
-            <EditText
-                android:id="@+id/etDetalleNombre"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#2C3E50"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="16dp"/>
+                app:cardCornerRadius="24dp"
+                app:cardElevation="12dp"
+                app:cardBackgroundColor="#FFFFFF">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Número de Jugadores (Ej: 2-4)"
-                android:textColor="#7F8C8D"
-                android:textSize="14sp"/>
-            <EditText
-                android:id="@+id/etDetalleJugadores"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#2C3E50"
-                android:textSize="20sp"
-                android:layout_marginBottom="16dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Duración (minutos)"
-                android:textColor="#7F8C8D"
-                android:textSize="14sp"/>
-            <EditText
-                android:id="@+id/etDetalleDuracion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#2C3E50"
-                android:textSize="20sp"
-                android:inputType="number"
-                android:layout_marginBottom="24dp"/>
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="140dp"
+                        android:layout_height="140dp"
+                        app:cardCornerRadius="16dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="24dp">
+                        <ImageView
+                            android:id="@+id/ivDetalleCaratula"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:background="#E0E0E0" />
+                    </androidx.cardview.widget.CardView>
 
-            <Switch
-                android:id="@+id/switchJugado"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="¡Ya lo he jugado!"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="#2980B9"
-                android:layout_marginBottom="32dp"
-                android:thumbTint="@color/switch_colores"
-                android:trackTint="@color/switch_colores"
-                app:thumbTint="@color/switch_colores"
-                app:trackTint="@color/switch_colores" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="NOMBRE DEL JUEGO"
+                        android:textColor="#2A9D8F"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                    <EditText
+                        android:id="@+id/etDetalleNombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#212121"
+                        android:backgroundTint="#2A9D8F"
+                        android:layout_marginBottom="16dp"/>
 
-            <Button
-                android:id="@+id/btnGuardarCambios"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="GUARDAR CAMBIOS"
-                android:backgroundTint="#27AE60"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="👥 NÚMERO DE JUGADORES"
+                        android:textColor="#2A9D8F"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                    <EditText
+                        android:id="@+id/etDetalleJugadores"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:textColor="#757575"
+                        android:backgroundTint="#2A9D8F"
+                        android:layout_marginBottom="16dp"/>
 
-            <ImageView
-                android:id="@+id/ivDetalleCaratula"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="24dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_launcher_background" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="⏱️ DURACIÓN (MINUTOS)"
+                        android:textColor="#2A9D8F"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                    <EditText
+                        android:id="@+id/etDetalleDuracion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:textColor="#757575"
+                        android:backgroundTint="#2A9D8F"
+                        android:layout_marginBottom="24dp"/>
 
+                    <Switch
+                        android:id="@+id/switchJugado"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="¿Lo tengo en mi colección?"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#2A9D8F"
+                        android:layout_marginBottom="12dp"
+                        android:theme="@style/Theme.AppCompat.Light"/>
+
+                    <LinearLayout
+                        android:id="@+id/layoutFecha"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        android:layout_marginBottom="24dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="📅 FECHA DE ÚLTIMA PARTIDA"
+                            android:textColor="#2A9D8F"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                        <EditText
+                            android:id="@+id/etDetalleFecha"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="dd/mm/aaaa"
+                            android:inputType="date"
+                            android:textColor="#757575"
+                            android:backgroundTint="#2A9D8F"/>
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btnGuardarCambios"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:text="💾 GUARDAR CAMBIOS"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF"
+                        app:backgroundTint="#2A9D8F"
+                        app:cornerRadius="12dp"
+                        android:layout_marginTop="8dp"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
-</LinearLayout>
+    </ScrollView>
+</RelativeLayout>

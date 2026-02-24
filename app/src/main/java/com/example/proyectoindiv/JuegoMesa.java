@@ -7,15 +7,18 @@ public class JuegoMesa {
     private int duracion;
     private int jugado;
     private int propiedad;
+    private String fecha;
 
     // Constructor
-    public JuegoMesa(int id, String nombre, String jugadores, int duracion, int jugado, int propiedad) {
+    public JuegoMesa(int id, String nombre, String jugadores, int duracion, int jugado, int propiedad, String fecha) {
         this.id = id;
         this.nombre = nombre;
         this.jugadores = jugadores;
         this.duracion = duracion;
         this.jugado = jugado;
         this.propiedad = propiedad;
+        this.fecha = fecha;
+
     }
 
     // Getters y Setters
@@ -36,4 +39,5 @@ public class JuegoMesa {
 
     public int getPropiedad() { return propiedad; }
     public void setPropiedad(int propiedad) { this.propiedad = propiedad; }
+    public String getFecha() { return fecha; }
 }

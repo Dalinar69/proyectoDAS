@@ -14,9 +14,12 @@ import java.util.List;
 public class JuegoAdapter extends RecyclerView.Adapter<JuegoAdapter.JuegoViewHolder> {
 
     private List<JuegoMesa> listaJuegos;
+    private boolean esWishlist;
 
-    public JuegoAdapter(List<JuegoMesa> listaJuegos) {
+    public JuegoAdapter(List<JuegoMesa> listaJuegos, boolean esWishlist) {
+
         this.listaJuegos = listaJuegos;
+        this.esWishlist = esWishlist;
     }
 
     @NonNull
@@ -46,7 +49,8 @@ public class JuegoAdapter extends RecyclerView.Adapter<JuegoAdapter.JuegoViewHol
         if (imageResId != 0) {
             holder.ivCaratula.setImageResource(imageResId);
         } else {
-            holder.ivCaratula.setImageResource(R.drawable.ic_launcher_background); // Imagen por defecto
+            holder.ivCaratula.setImageResource(R.drawable.pordefecto);
+            holder.ivCaratula.setScaleType(android.widget.ImageView.ScaleType.FIT_CENTER); // Para que no se corte el dibujoh
         }
         // -----------------------------
 
@@ -61,6 +65,7 @@ public class JuegoAdapter extends RecyclerView.Adapter<JuegoAdapter.JuegoViewHol
             intent.putExtra("JUGADORES_JUEGO", juegoActual.getJugadores());
             intent.putExtra("DURACION_JUEGO", juegoActual.getDuracion());
             intent.putExtra("JUGADO_JUEGO", juegoActual.getJugado());
+            intent.putExtra("ES_WISHLIST", this.esWishlist);
 
             v.getContext().startActivity(intent);
         });

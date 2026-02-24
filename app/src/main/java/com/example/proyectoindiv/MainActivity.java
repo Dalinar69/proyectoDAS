@@ -1,6 +1,5 @@
 package com.example.proyectoindiv;
 
-
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
     private List<JuegoMesa> miLudoteca;
     private int modoLista = 1; // Por defecto Ludoteca
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,83 +28,105 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewJuegos = findViewById(R.id.recyclerViewJuegos);
         fabAnadirJuego = findViewById(R.id.fabAnadirJuego);
 
+        // Enlazamos el fondo principal para poder cambiarlo
+        android.widget.RelativeLayout layoutPrincipal = findViewById(R.id.layoutPrincipal);
+
         // 2. Configuramos el layout del RecyclerView (lista vertical estándar)
         recyclerViewJuegos.setLayoutManager(new LinearLayoutManager(this));
 
         // 3. Inicializamos la base de datos y obtenemos la lista de juegos
         dbHelper = new DatabaseHelper(this);
-        // 1. Leemos qué botón pulsaste en la pantalla de inicio
+
+        // Leemos qué botón pulsaste en la pantalla de inicio
         modoLista = getIntent().getIntExtra("MODO_LISTA", 1);
 
-        // 2. Arreglo rápido para que no quede soso arriba (El título de la barra)
+        // Creamos la variable booleana para pasársela al Adapter luego
+        boolean esWishlist = (modoLista == 0);
+
+        // Arreglo rápido para que no quede soso arriba y CAMBIO DE FONDO
         if (modoLista == 1) {
             setTitle("🎲 Mi Ludoteca");
+            layoutPrincipal.setBackgroundResource(R.drawable.ludoteca); // Fondo Ludoteca
         } else {
             setTitle("🛒 Mi Wishlist");
+            layoutPrincipal.setBackgroundResource(R.drawable.fondo_wishlist); // Fondo Wishlist
         }
 
-        // 3. Le pedimos a la BBDD solo los juegos de esa lista
+        // Le pedimos a la BBDD solo los juegos de esa lista
         miLudoteca = dbHelper.obtenerJuegosFiltrados(modoLista);
 
-        // 4. Configuramos el adaptador con la lista y se lo asignamos al RecyclerView
-        adaptadorJuegos = new JuegoAdapter(miLudoteca);
+        // 4. Configuramos el adaptador pasándole también si es wishlist o no (esWishlist)
+        adaptadorJuegos = new JuegoAdapter(miLudoteca, esWishlist);
         recyclerViewJuegos.setAdapter(adaptadorJuegos);
 
         // Configuración del botón flotante para añadir juegos mediante un Diálogo
         fabAnadirJuego.setOnClickListener(v -> {
-            // 1. Inflamos (cargamos) el diseño visual del diálogo que creamos en XML
             android.view.View dialogView = getLayoutInflater().inflate(R.layout.dialog_anadir_juego, null);
-
-            // 2. Enlazamos los campos de texto del diálogo
             android.widget.EditText etNombre = dialogView.findViewById(R.id.etNombreJuego);
             android.widget.EditText etJugadores = dialogView.findViewById(R.id.etJugadores);
             android.widget.EditText etDuracion = dialogView.findViewById(R.id.etDuracion);
 
-            // 3. Construimos la ventana emergente
-            new androidx.appcompat.app.AlertDialog.Builder(MainActivity.this)
+            // Creamos el diálogo pero NO lo mostramos todavía con .show()
+            androidx.appcompat.app.AlertDialog dialog = new androidx.appcompat.app.AlertDialog.Builder(MainActivity.this)
                     .setView(dialogView)
-                    .setPositiveButton("Guardar", (dialog, which) -> {
-                        // Obtenemos el texto que ha escrito el usuario
-                        String nombre = etNombre.getText().toString();
-                        String jugadores = etJugadores.getText().toString();
-                        String duracionStr = etDuracion.getText().toString();
-
-                        // Verificamos que no haya dejado campos vacíos básicos
-                        if (!nombre.isEmpty() && !duracionStr.isEmpty()) {
-                            int duracion = Integer.parseInt(duracionStr);
-
-                            // Guardamos en SQLite (por defecto lo ponemos como 'no jugado' y 'en propiedad')
-                            android.content.ContentValues values = new android.content.ContentValues();
-                            values.put(DatabaseHelper.COLUMN_NOMBRE, nombre);
-                            values.put(DatabaseHelper.COLUMN_JUGADORES, jugadores);
-                            values.put(DatabaseHelper.COLUMN_DURACION, duracion);
-                            values.put(DatabaseHelper.COLUMN_JUGADO, 0);
-                            values.put(DatabaseHelper.COLUMN_PROPIEDAD, modoLista);
-
-                            android.database.sqlite.SQLiteDatabase db = dbHelper.getWritableDatabase();
-                            db.insert(DatabaseHelper.TABLE_JUEGOS, null, values);
-                            db.close();
-
-                            // Recargamos la lista para que aparezca el nuevo juego al instante
-                            miLudoteca.clear();
-                            miLudoteca.addAll(dbHelper.obtenerJuegosFiltrados(modoLista));
-                            adaptadorJuegos.notifyDataSetChanged();
-                        }
-                    })
+                    .setTitle("Añadir nuevo juego")
+                    .setPositiveButton("Guardar", null) // Ponemos null para controlar el click después
                     .setNegativeButton("Cancelar", null)
-                    .show();
+                    .create();
+
+            dialog.show();
+
+            // Ahora capturamos el botón para que no se cierre si hay errores
+            dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE).setOnClickListener(view -> {
+                String nombre = etNombre.getText().toString().trim();
+                String jugadores = etJugadores.getText().toString().trim();
+                String duracionStr = etDuracion.getText().toString().trim();
+
+                // VALIDACIÓN: Si está vacío, marcamos el error en rojo en el propio campo
+                if (nombre.isEmpty()) {
+                    etNombre.setError("El nombre es obligatorio");
+                    return;
+                }
+                if (jugadores.isEmpty()){
+                    etJugadores.setError("Pon un numero de jugadores valido");
+                    return;
+                }
+                if (duracionStr.isEmpty()) {
+                    etDuracion.setError("Pon una duración");
+                    return;
+                }
+
+                // Si llega aquí, es que todo está OK
+                int duracion = Integer.parseInt(duracionStr);
+                android.content.ContentValues values = new android.content.ContentValues();
+                values.put(DatabaseHelper.COLUMN_NOMBRE, nombre);
+                values.put(DatabaseHelper.COLUMN_JUGADORES, jugadores);
+                values.put(DatabaseHelper.COLUMN_DURACION, duracion);
+
+                // Lo que hablamos: Si es Ludoteca (1), nace con el switch encendido (1)
+                values.put(DatabaseHelper.COLUMN_JUGADO, modoLista == 1 ? 1 : 0);
+                values.put(DatabaseHelper.COLUMN_PROPIEDAD, modoLista);
+                values.put(DatabaseHelper.COLUMN_FECHA, "");
+
+                android.database.sqlite.SQLiteDatabase db = dbHelper.getWritableDatabase();
+                db.insert(DatabaseHelper.TABLE_JUEGOS, null, values);
+                db.close();
+
+                // Actualizamos la lista y cerramos el diálogo manualmente
+                miLudoteca.clear();
+                miLudoteca.addAll(dbHelper.obtenerJuegosFiltrados(modoLista));
+                adaptadorJuegos.notifyDataSetChanged();
+                dialog.dismiss();
+            });
         });
     }
+
     @Override
     protected void onResume() {
         super.onResume();
-        // Si la base de datos y la lista ya están listas...
         if (dbHelper != null && miLudoteca != null && adaptadorJuegos != null) {
-            // 1. Vaciamos la lista antigua
             miLudoteca.clear();
-            // 2. Volvemos a pedirle todos los datos frescos a SQLite
             miLudoteca.addAll(dbHelper.obtenerJuegosFiltrados(modoLista));
-            // 3. Le chivamos al adaptador que repinte la pantalla
             adaptadorJuegos.notifyDataSetChanged();
         }
     }

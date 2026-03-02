@@ -5,24 +5,22 @@
         <item
             android:id="@+id/nav_ludoteca"
             android:icon="@android:drawable/ic_menu_gallery"
-            android:title=" Mi Ludoteca" />
-        <item
-            android:id="@+id/nav_wishlist"
-            android:icon="@android:drawable/ic_menu_agenda"
-            android:title=" Mi Wishlist" />
-    </group>
+            android:title="@string/menu_ludoteca" /> <item
+        android:id="@+id/nav_wishlist"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="@string/menu_wishlist" /> </group>
 
-    <item android:title="Aplicación">
-        <menu>
-            <item
-                android:id="@+id/nav_ajustes"
-                android:icon="@android:drawable/ic_menu_preferences"
-                android:title="️ Ajustes" />
-            <item
-                android:id="@+id/nav_acerca_de"
-                android:icon="@android:drawable/ic_menu_info_details"
-                android:title="ℹ Acerca de TABLER" />
-        </menu>
+    <item android:title="@string/menu_ajustes_idioma"> <menu>
+        <item
+            android:id="@+id/nav_es"
+            android:title="@string/idioma_es" /> <item
+        android:id="@+id/nav_en"
+        android:title="@string/idioma_en" /> <item
+        android:id="@+id/nav_eu"
+        android:title="@string/idioma_eu" /> <item
+        android:id="@+id/nav_acerca_de"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="@string/menu_acerca_de" /> </menu>
     </item>
 
 </menu>

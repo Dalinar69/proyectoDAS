@@ -12,7 +12,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // 1. Definimos el nombre y la versión de la base de datos
     private static final String DATABASE_NAME = "LudotecaDB";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 5;
 
     // 2. Definimos el nombre de la tabla y sus columnas
     public static final String TABLE_JUEGOS = "juegos";
@@ -46,20 +46,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // PRECARGAMOS ALGUNOS JUEGOS
         // JUEGOS INSERTADOS EN LA LUDOTECA
-        insertarJuegoInicial(db, "Catan", "3-4", 90, 1, 1, "24/02/2026");
-        insertarJuegoInicial(db, "Pandemic", "2-4", 60, 1, 1, "03/12/2025");
+        insertarJuegoInicial(db, "Catan", "3-4", 90, 1, 1, "");
+        insertarJuegoInicial(db, "Pandemic", "2-4", 60, 1, 1, "");
+        // NOTIFICACION (04/08/2024)
         insertarJuegoInicial(db, "Seven Wonders Duel", "2", 30, 1, 1, "04/08/2024");
-        insertarJuegoInicial(db, "Carcassonne", "2-4", 45, 1, 1, "16/09/2025");
+        insertarJuegoInicial(db, "Carcassonne", "2-4", 45, 1, 1, "");
+        // NOTIFICACION (24/02/2025)
         insertarJuegoInicial(db,"Dune Imperium", "2-4", 90, 1, 1,"24/02/2025");
+        // NOTIFICACION (12/07/2024)
         insertarJuegoInicial(db, "Skull King", "2-4", 60, 1, 1, "12/07/2024");
+        // NOTIFICACION (24/02/2025)
         insertarJuegoInicial(db, "Splendor", "2-4", 75, 1, 1, "24/02/2025");
-        insertarJuegoInicial(db, "Jaipur", "2", 30, 1, 1, "04/08/2024");
-        insertarJuegoInicial(db, "Exploding Kittens", "2-4", 60, 1, 1, "16/09/2025");
-        insertarJuegoInicial(db, "Monopoly", "2-4", 45, 1, 1, "24/02/2025");
-        insertarJuegoInicial(db, "Ticket to Ride", "2-4", 60, 1, 1, "12/07/2024");
-        insertarJuegoInicial(db, "Scout", "2-4", 75, 1, 1, "24/02/2025");
-        insertarJuegoInicial(db, "The Crew", "2-4", 20, 1, 1, "04/08/2024");
-        insertarJuegoInicial(db, "Risk", "2-4", 45, 1, 1, "27/01/2026");
+        insertarJuegoInicial(db, "Jaipur", "2", 30, 1, 1, "");
+        insertarJuegoInicial(db, "Exploding Kittens", "2-4", 60, 1, 1, "");
+        insertarJuegoInicial(db, "Monopoly", "2-4", 45, 1, 1, "");
+        insertarJuegoInicial(db, "Ticket to Ride", "2-4", 60, 1, 1, "");
+        insertarJuegoInicial(db, "Scout", "2-4", 75, 1, 1, "");
+        insertarJuegoInicial(db, "The Crew", "2-4", 20, 1, 1, "");
+        insertarJuegoInicial(db, "Risk", "2-4", 45, 1, 1, "");
         //JUEGOS INSERTADOS EN LA WISHLIST
         insertarJuegoInicial(db, "Gloomhaven", "1-4", 120, 0, 0, "");
         insertarJuegoInicial(db, "Arnak", "1-4", 60, 0, 0, "");

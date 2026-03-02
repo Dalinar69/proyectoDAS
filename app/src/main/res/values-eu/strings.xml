@@ -1,0 +1,60 @@
+<resources>
+    <string name="instrucciones">1. Gehitu jokoak zure Bildumara\n2. Gorde gogokoenak Nahien Zerrendan\n3. Jolastera!</string>
+
+    <string name="slogan_inicio">Zure ludoteka poltsikoan</string>
+
+    <string name="acerca_de_titulo">TABLER buruz</string>
+    <string name="acerca_de_mensaje">Mahai-jokoen Kudeatzailea v1.0\n\nKlaseko proiekturako garatua.\n\nEskerrik asko erabiltzeagatik!</string>
+    <string name="btn_cerrar">Itxi</string>
+
+    <string name="dialog_add_title">Joko berria gehitu</string>
+    <string name="hint_nombre">Jokoaren izena (adib. Dixit)</string>
+    <string name="hint_jugadores">Jokalariak (adib. 2-4)</string>
+    <string name="hint_duracion">Iraupena minututan (adib. 60)</string>
+    <string name="btn_guardar">Gorde</string>
+    <string name="btn_cancelar">Utzi</string>
+    <string name="error_obligatorio">Derrigorrezkoa</string>
+
+    <string name="btn_inicio_ludoteca">🎲 Joan Nire Bildumara</string>
+    <string name="btn_inicio_wishlist">🛒 Joan Nahien Zerrendara</string>
+
+    <string name="subtitulo_header">Zure Jokoen Bilduma</string>
+
+    <string name="idioma_es">🇪🇸 Espainiera</string>
+    <string name="idioma_en">🇬🇧 Ingelesa</string>
+    <string name="idioma_eu">🟢 Euskara</string>
+
+    <string name="app_name">Tabler</string>
+    <string name="abrir_menu">Ireki menua</string>
+    <string name="cerrar_menu">Itxi menua</string>
+
+    <string name="menu_ludoteca"> Zure bilduma</string>
+    <string name="menu_ludoteca2"> bilduma </string>
+    <string name="menu_wishlist"> Nire Nahien Zerrenda</string>
+    <string name="menu_ajustes_idioma">Hizkuntza Ezarpenak</string>
+    <string name="menu_acerca_de"> TABLER buruz</string>
+
+    <string name="jugadores">👥 Jokalariak: </string>
+    <string name="duracion">⏱️ Iraupena: </string>
+    <string name="minutos"> min</string>
+
+    <string name="toast_eliminado">Jokoa bildumatik ezabatu da</string>
+    <string name="toast_anadido">Bildumara gehitu da!</string>
+
+    <string name="toast_error_fecha">Errorea! Sartu baliozko data bat</string>
+    <string name="error_duplicado">Joko hau badago jada</string>
+    <string name="idioma_seleccionado">Hizkuntza hautatuta dago jada</string>
+
+    <string name="noti_titulo">Jokoak hautsa hartzen! 🕸️</string>
+    <string name="noti_texto">Duela 3 hilabete baino gehiago ez duzula jokatu: </string>
+
+    <string name="btn_noti_jugar"> JOLASTERA</string>
+    <string name="btn_noti_descartar"> BAZTERTU</string>
+
+    <string name="titulo_estadisticas">Bildumaren Laburpena</string>
+    <string name="stat_total">Jokoak guztira:</string>
+    <string name="stat_tiempo_medio">Batez besteko iraupena:</string>
+
+    <string name="cambiar_nombre">Nola duzu izena, jokalari?</string>
+
+</resources>

@@ -26,8 +26,13 @@
         android:textColor="#FFFFFF" />
 
     <TextView
+        android:id="@+id/tvNombreUsuarioNav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tu Colección de Juegos"
-        android:textColor="#E0E0E0" />
+        android:layout_marginTop="2dp"
+        android:text="Colección de: Jugador"
+        android:textColor="#E0E0E0"
+        android:textSize="14sp"
+        android:textStyle="italic" />
+
 </LinearLayout>

@@ -1,0 +1,59 @@
+<resources>
+    <string name="instrucciones">1. Add games to your Collection\n2. Save your targets in the Wishlist\n3. Let\'s play!</string>
+
+    <string name="slogan_inicio">Your board games in your pocket</string>
+
+    <string name="acerca_de_titulo">About TABLER</string>
+    <string name="acerca_de_mensaje">Board Game Manager v1.0\n\nDeveloped for the class project.\n\nThanks for using it!</string>
+    <string name="btn_cerrar">Close</string>
+
+    <string name="dialog_add_title">Add new game</string>
+    <string name="hint_nombre">Game name (e.g. Dixit)</string>
+    <string name="hint_jugadores">Players (e.g. 2-4)</string>
+    <string name="hint_duracion">Playtime in min (e.g. 60)</string>
+    <string name="btn_guardar">Save</string>
+    <string name="btn_cancelar">Cancel</string>
+    <string name="error_obligatorio">Required</string>
+
+    <string name="btn_inicio_ludoteca">🎲 Go to My Boardgames</string>
+    <string name="btn_inicio_wishlist">🛒 Go to My Wishlist</string>
+
+    <string name="subtitulo_header">Your Boardgame Collection</string>
+
+    <string name="idioma_es">🇪🇸 Spanish</string>
+    <string name="idioma_en">🇬🇧 English</string>
+    <string name="idioma_eu">🟢 Basque</string>
+
+    <string name="app_name">Tabler</string>
+    <string name="abrir_menu">Open menu</string>
+    <string name="cerrar_menu">Close menu</string>
+
+    <string name="menu_ludoteca"> Your boardgames </string>
+    <string name="menu_ludoteca2"> boardgames </string>
+    <string name="menu_wishlist"> My Wishlist</string>
+    <string name="menu_ajustes_idioma">Language Settings</string>
+    <string name="menu_acerca_de"> About TABLER</string>
+
+    <string name="jugadores">👥 Players: </string>
+    <string name="duracion">⏱️ Playtime: </string>
+    <string name="minutos"> min</string>
+
+    <string name="toast_eliminado">Game removed from collection</string>
+    <string name="toast_anadido">Added to collection!</string>
+
+    <string name="toast_error_fecha">Error! Enter a valid date</string>
+    <string name="error_duplicado">This game already exists</string>
+    <string name="idioma_seleccionado">Language is already selected</string>
+
+    <string name="noti_titulo">Games gathering dust! 🕸️</string>
+    <string name="noti_texto">You haven\'t played this for over 3 months: </string>
+
+    <string name="btn_noti_jugar"> LET\'S PLAY</string>
+    <string name="btn_noti_descartar"> DISMISS</string>
+
+    <string name="titulo_estadisticas">Collection Summary</string>
+    <string name="stat_total">Total games:</string>
+    <string name="stat_tiempo_medio">Average playtime:</string>
+
+    <string name="cambiar_nombre">What is your name, gamer?</string>
+</resources>

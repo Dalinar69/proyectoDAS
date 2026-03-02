@@ -32,10 +32,10 @@ public class JuegoAdapter extends RecyclerView.Adapter<JuegoAdapter.JuegoViewHol
     @Override
     public void onBindViewHolder(@NonNull JuegoViewHolder holder, int position) {
         JuegoMesa juegoActual = listaJuegos.get(position);
-
         holder.tvNombreJuego.setText(juegoActual.getNombre());
-        holder.tvJugadores.setText("👥 Jugadores: " + juegoActual.getJugadores());
-        holder.tvDuracion.setText("⏱️ Duración: " + juegoActual.getDuracion() + " min");
+        holder.tvJugadores.setText(holder.itemView.getContext().getString(R.string.jugadores) +  " " +  juegoActual.getJugadores());
+        holder.tvDuracion.setText(holder.itemView.getContext().getString(R.string.duracion) + " " + juegoActual.getDuracion() + holder.itemView.getContext().getString(R.string.minutos));
+
 
         // --- IMAGEN ---
         // 1. Limpiamos el nombre: lo pasamos a minúsculas y quitamos espacios
@@ -66,6 +66,7 @@ public class JuegoAdapter extends RecyclerView.Adapter<JuegoAdapter.JuegoViewHol
             intent.putExtra("DURACION_JUEGO", juegoActual.getDuracion());
             intent.putExtra("JUGADO_JUEGO", juegoActual.getJugado());
             intent.putExtra("ES_WISHLIST", this.esWishlist);
+            intent.putExtra("FECHA_JUEGO", juegoActual.getFecha());
 
             v.getContext().startActivity(intent);
         });

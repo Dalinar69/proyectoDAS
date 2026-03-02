@@ -17,7 +17,7 @@ public class DetalleActivity extends AppCompatActivity {
     private EditText etNombre, etJugadores, etDuracion, etFecha;
     private LinearLayout layoutFecha;
     private Switch switchJugado;
-    private Button btnGuardar;
+    private Button btnGuardar, btnBuscarWeb;
     private DatabaseHelper dbHelper;
     private int idJuegoActual;
     private android.widget.ImageView ivDetalleCaratula;
@@ -27,6 +27,7 @@ public class DetalleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle);
+
 
         // 1. Enlaces
         etNombre = findViewById(R.id.etDetalleNombre);
@@ -38,6 +39,20 @@ public class DetalleActivity extends AppCompatActivity {
         layoutFecha = findViewById(R.id.layoutFecha);
         etFecha = findViewById(R.id.etDetalleFecha);
         dbHelper = new DatabaseHelper(this);
+        btnBuscarWeb = findViewById(R.id.btnBuscarWeb);
+
+        // 2.1 Intent implicito
+        btnBuscarWeb.setOnClickListener(v -> {
+            // Cogemos el nombre del juego que estás viendo
+            String nombreBuscado = etNombre.getText().toString();
+
+            // Creamos la URL de búsqueda en Google
+            String url = "https://www.google.com/search?q=juego+de+mesa+" + nombreBuscado;
+
+            android.content.Intent intentWeb = new android.content.Intent(android.content.Intent.ACTION_VIEW);
+            intentWeb.setData(android.net.Uri.parse(url));
+            startActivity(intentWeb);
+        });
 
         // 2. Datos del Intent
         idJuegoActual = getIntent().getIntExtra("ID_JUEGO", -1);
@@ -46,12 +61,22 @@ public class DetalleActivity extends AppCompatActivity {
         int duracion = getIntent().getIntExtra("DURACION_JUEGO", 0);
         int jugado = getIntent().getIntExtra("JUGADO_JUEGO", 0);
         esWishlist = getIntent().getBooleanExtra("ES_WISHLIST", false);
+        String fechaGuardada = getIntent().getStringExtra("FECHA_JUEGO");
+
+        int idNotiBorrar = getIntent().getIntExtra("ID_NOTI_BORRAR", -1);
+        if (idNotiBorrar != -1) {
+            androidx.core.app.NotificationManagerCompat.from(this).cancel(idNotiBorrar);
+        }
 
         // 3. Rellenar campos
         etNombre.setText(nombre);
         etJugadores.setText(jugadores);
         etDuracion.setText(String.valueOf(duracion));
         switchJugado.setChecked(jugado == 1);
+
+        if (fechaGuardada != null && !fechaGuardada.isEmpty()) {
+            etFecha.setText(fechaGuardada);
+        }
 
         // Lógica visual inicial
         if (jugado == 1) layoutFecha.setVisibility(View.VISIBLE);
@@ -60,52 +85,28 @@ public class DetalleActivity extends AppCompatActivity {
             layoutFecha.setVisibility(isChecked ? View.VISIBLE : View.GONE);
         });
 
-        // --- FORMATEO DE FECHA AUTOMÁTICO (dd/mm/aaaa) ---
-        etFecha.addTextChangedListener(new TextWatcher() {
-            private String current = "";
-            private String ddmmyyyy = "DDMMYYYY";
-            private Calendar cal = Calendar.getInstance();
+        // --- SELECCIÓN DE FECHA CON CALENDARIO NATIVO ---
+        // Hacemos que no se pueda escribir a mano con el teclado
+        etFecha.setFocusable(false);
+        etFecha.setClickable(true);
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!s.toString().equals(current)) {
-                    String clean = s.toString().replaceAll("[^\\d.]|\\.", "");
-                    String cleanC = current.replaceAll("[^\\d.]|\\.", "");
+        etFecha.setOnClickListener(v -> {
+            // Cogemos la fecha actual para que el calendario se abra en el día de hoy
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
 
-                    int cl = clean.length();
-                    int sel = cl;
-                    for (int i = 2; i <= cl && i <= 6; i += 2) {
-                        sel++;
-                    }
-                    if (clean.equals(cleanC)) sel--;
-
-                    if (clean.length() < 8){
-                        clean = clean + ddmmyyyy.substring(clean.length());
-                    } else {
-                        int day  = Integer.parseInt(clean.substring(0,2));
-                        int mon  = Integer.parseInt(clean.substring(2,4));
-                        int year = Integer.parseInt(clean.substring(4,8));
-
-                        mon = mon < 1 ? 1 : mon > 12 ? 12 : mon;
-                        cal.set(Calendar.MONTH, mon-1);
-                        year = (year<1900)?1900:(year>2100)?2100:year;
-                        cal.set(Calendar.YEAR, year);
-                        day = (day > cal.getActualMaximum(Calendar.DATE))? cal.getActualMaximum(Calendar.DATE):day;
-                        clean = String.format("%02d%02d%02d",day, mon, year);
-                    }
-
-                    clean = String.format("%s/%s/%s", clean.substring(0, 2),
-                            clean.substring(2, 4),
-                            clean.substring(4, 8));
-
-                    sel = sel < 0 ? 0 : sel;
-                    current = clean;
-                    etFecha.setText(current);
-                    etFecha.setSelection(sel < current.length() ? sel : current.length());
-                }
-            }
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void afterTextChanged(Editable s) {}
+            // Creamos el diálogo del calendario
+            android.app.DatePickerDialog datePickerDialog = new android.app.DatePickerDialog(
+                    DetalleActivity.this,
+                    (view, year1, monthOfYear, dayOfMonth) -> {
+                        // Cuando el usuario elige fecha, le damos el formato dd/mm/aaaa y lo ponemos en el cajetín
+                        String fechaFormateada = String.format(java.util.Locale.getDefault(), "%02d/%02d/%04d", dayOfMonth, (monthOfYear + 1), year1);
+                        etFecha.setText(fechaFormateada);
+                    },
+                    year, month, day);
+            datePickerDialog.show();
         });
 
         // --- IMAGEN  ---
@@ -123,12 +124,12 @@ public class DetalleActivity extends AppCompatActivity {
             if (!esWishlist && !loTengo) {
                 // Estás en Ludoteca y dices que ya NO lo tienes -> BORRAR
                 dbHelper.eliminarJuego(idJuegoActual);
-                Toast.makeText(this, "Juego eliminado de la colección", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.toast_eliminado), Toast.LENGTH_SHORT).show();
             } else {
                 int nuevaPropiedad = esWishlist && loTengo ? 1 : (esWishlist ? 0 : 1);
 
                 if (esWishlist && loTengo) {
-                    Toast.makeText(this, "¡Añadido a la colección!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.toast_anadido), Toast.LENGTH_SHORT).show();
                 }
 
                 dbHelper.actualizarJuegoCompleto(
@@ -143,5 +144,6 @@ public class DetalleActivity extends AppCompatActivity {
             }
             finish();
         });
+
     }
 }

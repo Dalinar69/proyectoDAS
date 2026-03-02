@@ -1,5 +1,59 @@
 <resources>
+    <string name="instrucciones">1. Añade tus juegos a la Ludoteca\n2. Apunta tus deseados en la Wishlist\n3. ¡A jugar!</string>
+
+    <string name="slogan_inicio">Tu ludoteca en tu bolsillo</string>
+
+    <string name="acerca_de_titulo">Acerca de TABLER</string>
+    <string name="acerca_de_mensaje">Gestor de Juegos de Mesa v1.0\n\nDesarrollado para el proyecto de clase.\n\n¡Gracias por usarla!</string>
+    <string name="btn_cerrar">Cerrar</string>
+
+    <string name="dialog_add_title">Añadir nuevo juego</string>
+    <string name="hint_nombre">Nombre del juego (ej. Dixit)</string>
+    <string name="hint_jugadores">Jugadores (ej. 2-4)</string>
+    <string name="hint_duracion">Duración en min (ej. 60)</string>
+    <string name="btn_guardar">Guardar</string>
+    <string name="btn_cancelar">Cancelar</string>
+    <string name="error_obligatorio">Obligatorio</string>
+
+    <string name="btn_inicio_ludoteca">🎲 Ir a Mi Ludoteca</string>
+    <string name="btn_inicio_wishlist">🛒 Ir a Mi Wishlist</string>
+
+    <string name="subtitulo_header">Tu Colección de Juegos</string>
+
+    <string name="idioma_es">🇪🇸 Español</string>
+    <string name="idioma_en">🇬🇧 English</string>
+    <string name="idioma_eu">🟢 Euskera</string>
+
     <string name="app_name">Tabler</string>
     <string name="abrir_menu">Abrir menú</string>
     <string name="cerrar_menu">Cerrar menú</string>
+
+    <string name="menu_ludoteca"> Tu ludoteca:</string>
+    <string name="menu_ludoteca2"> Ludoteca de </string>
+    <string name="menu_wishlist"> Mi Wishlist</string>
+    <string name="menu_ajustes_idioma">Ajustes de Idioma</string>
+    <string name="menu_acerca_de"> Acerca de TABLER</string>
+
+    <string name="jugadores">👥 Jugadores: </string>
+    <string name="duracion">⏱️ Duración: </string>
+    <string name="minutos"> min</string>
+
+    <string name="toast_eliminado">Juego eliminado de la colección</string>
+    <string name="toast_anadido">¡Añadido a la colección!</string>
+
+    <string name="toast_error_fecha">¡Error! Introduce una fecha válida</string>
+    <string name="error_duplicado">Este juego ya existe</string>
+    <string name="idioma_seleccionado">El idioma ya está seleccionado</string>
+
+    <string name="noti_titulo">¡Juegos cogiendo polvo! 🕸️</string>
+    <string name="noti_texto">Hace más de 3 meses que no juegas a: </string>
+
+    <string name="btn_noti_jugar"> A JUGAR</string>
+    <string name="btn_noti_descartar"> DESCARTAR</string>
+
+    <string name="titulo_estadisticas">Resumen de Colección</string>
+    <string name="stat_total">Total de juegos:</string>
+    <string name="stat_tiempo_medio">Duración media:</string>
+
+    <string name="cambiar_nombre">¿Cómo te llamas, jugón?</string>
 </resources>

@@ -141,6 +141,14 @@
                         app:cornerRadius="12dp"
                         android:layout_marginTop="8dp"/>
 
+                    <Button
+                        android:id="@+id/btnBuscarWeb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="🌍 Buscar Info en Web"
+                        android:layout_marginTop="8dp"
+                        app:backgroundTint="#457B9D" />
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>

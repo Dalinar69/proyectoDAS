@@ -51,8 +51,9 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navView = findViewById(R.id.nav_view);
 
-        // Añade el botón de la hamburguesa a la barra
+        // Configura el icono del menú lateral (Navigation Drawer) en la Toolbar.
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.abrir_menu, R.string.cerrar_menu);
+        toggle.getDrawerArrowDrawable().setColor(android.graphics.Color.WHITE);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -62,15 +63,17 @@ public class MainActivity extends AppCompatActivity {
                 cambiarModo(1);
             } else if (item.getItemId() == R.id.nav_wishlist) {
                 cambiarModo(0);
-            } else if (item.getItemId() == R.id.nav_ajustes) {
-                // Mensaje temporal de relleno
-                android.widget.Toast.makeText(this, "Ajustes en desarrollo 🛠️", android.widget.Toast.LENGTH_SHORT).show();
+            } else if (item.getItemId() == R.id.nav_es) {
+                cambiarIdioma("es");
+            } else if (item.getItemId() == R.id.nav_en) {
+                cambiarIdioma("en");
+            } else if (item.getItemId() == R.id.nav_eu) {
+                cambiarIdioma("eu");
             } else if (item.getItemId() == R.id.nav_acerca_de) {
-                // Un diálogo chulo para presumir de proyecto
                 new androidx.appcompat.app.AlertDialog.Builder(this)
-                        .setTitle("Acerca de TABLER")
-                        .setMessage("Gestor de Juegos de Mesa v1.0\n\nDesarrollado por Iker Argulo para el proyecto individual de DAS.\n\n¡Gracias por usarla!")
-                        .setPositiveButton("Cerrar", null)
+                        .setTitle(getString(R.string.acerca_de_titulo))
+                        .setMessage(getString(R.string.acerca_de_mensaje))
+                        .setPositiveButton(getString(R.string.btn_cerrar), null)
                         .show();
             }
             drawerLayout.closeDrawer(GravityCompat.START); // Cierra el menú al elegir
@@ -87,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         modoLista = getIntent().getIntExtra("MODO_LISTA", 1);
         cambiarModo(modoLista);
 
+
         // Configuración del botón flotante para añadir juegos mediante un Diálogo
         fabAnadirJuego.setOnClickListener(v -> {
             android.view.View dialogView = getLayoutInflater().inflate(R.layout.dialog_anadir_juego, null);
@@ -97,33 +101,45 @@ public class MainActivity extends AppCompatActivity {
             // Creamos el diálogo pero NO lo mostramos todavía con .show()
             androidx.appcompat.app.AlertDialog dialog = new androidx.appcompat.app.AlertDialog.Builder(MainActivity.this)
                     .setView(dialogView)
-                    .setTitle("Añadir nuevo juego")
-                    .setPositiveButton("Guardar", null) // Ponemos null para controlar el click después
-                    .setNegativeButton("Cancelar", null)
+                    .setTitle(getString(R.string.dialog_add_title)) // Título traducido
+                    .setPositiveButton(getString(R.string.btn_guardar), null) // Botón traducido
+                    .setNegativeButton(getString(R.string.btn_cancelar), null) // Botón traducido
                     .create();
+
 
             dialog.show();
 
-            // Ahora capturamos el botón para que no se cierre si hay errores
             dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE).setOnClickListener(view -> {
                 String nombre = etNombre.getText().toString().trim();
                 String jugadores = etJugadores.getText().toString().trim();
                 String duracionStr = etDuracion.getText().toString().trim();
 
-                // VALIDACIÓN: Si está vacío, marcamos el error en rojo en el propio campo
+                // Errores traducidos
                 if (nombre.isEmpty()) {
-                    etNombre.setError("El nombre es obligatorio");
+                    etNombre.setError(getString(R.string.error_obligatorio));
                     return;
                 }
                 if (jugadores.isEmpty()){
-                    etJugadores.setError("Pon un numero de jugadores valido");
+                    etJugadores.setError(getString(R.string.error_obligatorio));
                     return;
                 }
                 if (duracionStr.isEmpty()) {
-                    etDuracion.setError("Pon una duración");
+                    etDuracion.setError(getString(R.string.error_obligatorio));
                     return;
                 }
+                boolean existe = false;
+                for (JuegoMesa j : dbHelper.obtenerTodosLosJuegos()) {
+                    // equalsIgnoreCase ignora si lo pones en mayúsculas o minúsculas
+                    if (j.getNombre().equalsIgnoreCase(nombre)) {
+                        existe = true;
+                        break; // Si ya hemos encontrado uno, dejamos de buscar
+                    }
+                }
 
+                if (existe) {
+                    etNombre.setError(getString(R.string.error_duplicado));
+                    return; // Cortamos aquí para que no se guarde
+                }
                 // Si llega aquí, es que todo está OK
                 int duracion = Integer.parseInt(duracionStr);
                 android.content.ContentValues values = new android.content.ContentValues();
@@ -147,6 +163,60 @@ public class MainActivity extends AppCompatActivity {
                 dialog.dismiss();
             });
         });
+
+
+        // ---  MOSTRAR NOMBRE EN EL MENÚ LATERAL ---
+        android.view.View header = navView.getHeaderView(0);
+        android.widget.TextView tvNombreNav = header.findViewById(R.id.tvNombreUsuarioNav);
+
+        android.content.SharedPreferences prefs = getSharedPreferences("MisPreferencias", MODE_PRIVATE);
+        String nombre = prefs.getString("user_name", "Jugador");
+        // Miramos qué idioma está puesto ahora mismo
+        String lang = androidx.appcompat.app.AppCompatDelegate.getApplicationLocales().toLanguageTags();
+
+        // Aplicamos la lógica del orden según el idioma
+        if (lang.equals("eu")) {
+            // En Euskera: Nombre + ren + Ludoteka (ej: Ikerren Ludoteka)
+            tvNombreNav.setText(nombre + "ren " + getString(R.string.menu_ludoteca2));
+        } else if (lang.equals("es")) { //Español (ej :Ludoteca de Iker)
+            tvNombreNav.setText(getString(R.string.menu_ludoteca2) + " " + nombre);
+        } else { //Ingles (ej: Iker's boardgames)
+            tvNombreNav.setText(nombre + "'s " + getString(R.string.menu_ludoteca2));
+        }
+
+        // Si clica en el nombre, llamamos al método para modificarlo
+        tvNombreNav.setOnClickListener(v -> mostrarDialogoNombre(tvNombreNav, prefs));
+    }
+    private void mostrarDialogoNombre(android.widget.TextView tvNombreNav, android.content.SharedPreferences prefs) {
+        android.view.View view = getLayoutInflater().inflate(R.layout.dialog_nombre, null);
+        android.widget.EditText etNombre = view.findViewById(R.id.etNuevoNombre);
+        etNombre.setText(prefs.getString("user_name", ""));
+
+        androidx.appcompat.app.AlertDialog dialog = new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setView(view)
+                .setPositiveButton("OK", null)
+                .setNegativeButton(getString(R.string.btn_cancelar), null)
+                .create();
+
+        dialog.show();
+
+        dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+            String nuevo = etNombre.getText().toString().trim();
+            if (!nuevo.isEmpty()) {
+                prefs.edit().putString("user_name", nuevo).apply();
+                String lang = androidx.appcompat.app.AppCompatDelegate.getApplicationLocales().toLanguageTags();
+                if (lang.equals("eu")) {
+                    tvNombreNav.setText(nuevo + "ren " + getString(R.string.menu_ludoteca2));
+                } else if (lang.equals("es")) {
+                    tvNombreNav.setText(getString(R.string.menu_ludoteca2) + " " + nuevo);
+                } else {
+                    tvNombreNav.setText(nuevo + "'s " + getString(R.string.menu_ludoteca2));
+                }
+                dialog.dismiss();
+            } else {
+                etNombre.setError(getString(R.string.error_obligatorio));
+            }
+        });
     }
 
     private void cambiarModo(int nuevoModo) {
@@ -154,16 +224,28 @@ public class MainActivity extends AppCompatActivity {
         boolean esWishlist = (modoLista == 0);
 
         if (modoLista == 1) {
-            getSupportActionBar().setTitle("🎲 Mi Ludoteca");
+            getSupportActionBar().setTitle(getString(R.string.menu_ludoteca));
             layoutPrincipal.setBackgroundResource(R.drawable.ludoteca);
         } else {
-            getSupportActionBar().setTitle("🛒 Mi Wishlist");
+            getSupportActionBar().setTitle(getString(R.string.menu_wishlist));
             layoutPrincipal.setBackgroundResource(R.drawable.fondo_wishlist);
         }
 
         miLudoteca = dbHelper.obtenerJuegosFiltrados(modoLista);
         adaptadorJuegos = new JuegoAdapter(miLudoteca, esWishlist);
         recyclerViewJuegos.setAdapter(adaptadorJuegos);
+
+        // Comprobamos si el hueco del fragment existe (es decir, si estamos en horizontal)
+        android.view.View fragmentContainer = findViewById(R.id.fragmentContainer);
+        if (fragmentContainer != null) {
+            EstadisticasFragment fragment = new EstadisticasFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentContainer, fragment)
+                    .commit();
+
+            // Usamos un pequeño retraso para asegurar que el fragment se ha dibujado antes de pasarle el dato
+            fragmentContainer.post(() -> fragment.actualizarDatos(miLudoteca));
+        }
     }
 
     private void recargarLista() {
@@ -179,4 +261,22 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         recargarLista();
         }
+
+    // Método para cambiar el idioma de la aplicación en tiempo de ejecución.
+    private void cambiarIdioma(String codigoIdioma) {
+        // Miramos qué idioma está puesto ahora mismo
+        String actual = androidx.appcompat.app.AppCompatDelegate.getApplicationLocales().toLanguageTags();
+
+        // Si ya estamos en ese idioma (o si está vacío y elegimos el español, que es la base), no hacemos nada
+        if (actual.equals(codigoIdioma) || (actual.isEmpty() && codigoIdioma.equals("es"))) {
+            android.widget.Toast.makeText(this, getString(R.string.idioma_seleccionado), android.widget.Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Si es distinto, le decimos a Android que recargue la app en el nuevo idioma
+        androidx.core.os.LocaleListCompat appLocale = androidx.core.os.LocaleListCompat.forLanguageTags(codigoIdioma);
+        androidx.appcompat.app.AppCompatDelegate.setApplicationLocales(appLocale);
     }
+
+
+}

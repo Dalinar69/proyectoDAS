@@ -3,39 +3,36 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="24dp">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Añadir Nuevo Juego"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp"
-        android:textColor="#333333"/>
+    android:padding="24dp"
+    android:background="#FFFFFF">
 
     <EditText
         android:id="@+id/etNombreJuego"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nombre del juego (ej. Dixit)"
+        android:hint="@string/hint_nombre"
         android:inputType="textCapWords"
-        android:layout_marginBottom="8dp"/>
+        android:textColor="#333333"
+        android:textColorHint="#999999"
+        android:layout_marginBottom="16dp" />
 
     <EditText
         android:id="@+id/etJugadores"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Jugadores (ej. 2-6)"
+        android:hint="@string/hint_jugadores"
         android:inputType="text"
-        android:layout_marginBottom="8dp"/>
+        android:textColor="#333333"
+        android:textColorHint="#999999"
+        android:layout_marginBottom="16dp" />
 
     <EditText
         android:id="@+id/etDuracion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Duración en minutos (ej. 45)"
+        android:hint="@string/hint_duracion"
         android:inputType="number"
-        android:layout_marginBottom="16dp"/>
+        android:textColor="#333333"
+        android:textColorHint="#999999" />
 
 </LinearLayout>

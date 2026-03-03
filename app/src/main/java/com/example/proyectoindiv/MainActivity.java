@@ -63,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
                 cambiarModo(1);
             } else if (item.getItemId() == R.id.nav_wishlist) {
                 cambiarModo(0);
+            } else if (item.getItemId() == R.id.nav_exportar) {
+                exportarColeccionTXT();
             } else if (item.getItemId() == R.id.nav_es) {
                 cambiarIdioma("es");
             } else if (item.getItemId() == R.id.nav_en) {
@@ -175,15 +177,16 @@ public class MainActivity extends AppCompatActivity {
         String lang = androidx.appcompat.app.AppCompatDelegate.getApplicationLocales().toLanguageTags();
 
         // Aplicamos la lógica del orden según el idioma
-        if (lang.equals("eu")) {
+        if (lang.contains("eu")) {
             // En Euskera: Nombre + ren + Ludoteka (ej: Ikerren Ludoteka)
             tvNombreNav.setText(nombre + "ren " + getString(R.string.menu_ludoteca2));
-        } else if (lang.equals("es")) { //Español (ej :Ludoteca de Iker)
+        } else if (lang.contains("es") || lang.isEmpty()) {
+            // Español o por defecto (ej: Ludoteca de Iker)
             tvNombreNav.setText(getString(R.string.menu_ludoteca2) + " " + nombre);
-        } else { //Ingles (ej: Iker's boardgames)
+        } else {
+            // Ingles (ej: Iker's boardgames)
             tvNombreNav.setText(nombre + "'s " + getString(R.string.menu_ludoteca2));
         }
-
         // Si clica en el nombre, llamamos al método para modificarlo
         tvNombreNav.setOnClickListener(v -> mostrarDialogoNombre(tvNombreNav, prefs));
     }
@@ -205,9 +208,9 @@ public class MainActivity extends AppCompatActivity {
             if (!nuevo.isEmpty()) {
                 prefs.edit().putString("user_name", nuevo).apply();
                 String lang = androidx.appcompat.app.AppCompatDelegate.getApplicationLocales().toLanguageTags();
-                if (lang.equals("eu")) {
+                if (lang.contains("eu")) {
                     tvNombreNav.setText(nuevo + "ren " + getString(R.string.menu_ludoteca2));
-                } else if (lang.equals("es")) {
+                } else if (lang.contains("es") || lang.isEmpty()) {
                     tvNombreNav.setText(getString(R.string.menu_ludoteca2) + " " + nuevo);
                 } else {
                     tvNombreNav.setText(nuevo + "'s " + getString(R.string.menu_ludoteca2));
@@ -278,5 +281,34 @@ public class MainActivity extends AppCompatActivity {
         androidx.appcompat.app.AppCompatDelegate.setApplicationLocales(appLocale);
     }
 
+    // Método para exportar la base de datos a un fichero de texto plano
+    private void exportarColeccionTXT() {
+        try {
+            // Abrimos/creamos un archivo llamado "mi_coleccion.txt" en la memoria interna de la app
+            java.io.OutputStreamWriter fout = new java.io.OutputStreamWriter(
+                    openFileOutput("mi_coleccion.txt", MODE_PRIVATE));
+
+            fout.write("--- MI COLECCIÓN TABLER ---\n\n");
+
+            // Traemos TODOS los juegos (Ludoteca y Wishlist)
+            List<JuegoMesa> todosLosJuegos = dbHelper.obtenerTodosLosJuegos();
+
+            for (JuegoMesa juego : todosLosJuegos) {
+                String ubicacion = juego.getPropiedad() == 1 ? "LUDOTECA" : "WISHLIST";
+                String linea = "- " + juego.getNombre() + " | Jugadores: " + juego.getJugadores() +
+                        " | " + juego.getDuracion() + " min. [" + ubicacion + "]\n";
+                fout.write(linea); // Escribimos línea a línea en el archivo
+            }
+
+            fout.close(); // Cerramos el archivo para que se guarde bien
+
+            // Avisamos al usuario de que ha ido perfecto
+            android.widget.Toast.makeText(this, getString(R.string.toast_exportado), android.widget.Toast.LENGTH_LONG).show();
+
+        } catch (Exception ex) {
+            // Si algo falla (falta de memoria, etc), avisamos del error
+            android.widget.Toast.makeText(this, getString(R.string.toast_error_exportar), android.widget.Toast.LENGTH_SHORT).show();
+        }
+    }
 
 }

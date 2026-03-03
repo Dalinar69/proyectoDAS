@@ -57,4 +57,7 @@
 
     <string name="cambiar_nombre">Nola duzu izena, jokalari?</string>
 
+    <string name="menu_exportar">TXT-ra esportatu</string>
+    <string name="toast_exportado">Bilduma mi_coleccion.txt-ra esportatu da</string>
+    <string name="toast_error_exportar">Errorea esportatzean</string>
 </resources>

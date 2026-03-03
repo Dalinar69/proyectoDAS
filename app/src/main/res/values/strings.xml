@@ -28,7 +28,7 @@
     <string name="abrir_menu">Abrir menú</string>
     <string name="cerrar_menu">Cerrar menú</string>
 
-    <string name="menu_ludoteca"> Tu ludoteca:</string>
+    <string name="menu_ludoteca"> Tu ludoteca</string>
     <string name="menu_ludoteca2"> Ludoteca de </string>
     <string name="menu_wishlist"> Mi Wishlist</string>
     <string name="menu_ajustes_idioma">Ajustes de Idioma</string>
@@ -56,4 +56,8 @@
     <string name="stat_tiempo_medio">Duración media:</string>
 
     <string name="cambiar_nombre">¿Cómo te llamas, jugón?</string>
+
+    <string name="menu_exportar">Exportar a TXT</string>
+    <string name="toast_exportado">Colección exportada a mi_coleccion.txt</string>
+    <string name="toast_error_exportar">Error al exportar</string>
 </resources>

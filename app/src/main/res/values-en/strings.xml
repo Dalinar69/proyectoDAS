@@ -56,4 +56,9 @@
     <string name="stat_tiempo_medio">Average playtime:</string>
 
     <string name="cambiar_nombre">What is your name, gamer?</string>
+
+    <string name="menu_exportar">Export to TXT</string>
+    <string name="toast_exportado">Collection exported to mi_coleccion.txt</string>
+    <string name="toast_error_exportar">Error exporting</string>
+
 </resources>

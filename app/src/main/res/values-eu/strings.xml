@@ -4,7 +4,7 @@
     <string name="slogan_inicio">Zure ludoteka poltsikoan</string>
 
     <string name="acerca_de_titulo">TABLER buruz</string>
-    <string name="acerca_de_mensaje">Mahai-jokoen Kudeatzailea v1.0\n\nKlaseko proiekturako garatua.\n\nEskerrik asko erabiltzeagatik!</string>
+    <string name="acerca_de_mensaje">TABLER mahai-jokoen kudeatzaile aurreratua da.\n\nIker Argulok garatua Software Garapen Aurreratua (DAS) irakasgaiko proiekturako.\n\nEskerrik asko aplikazioa erabiltzeagatik!</string>
     <string name="btn_cerrar">Itxi</string>
 
     <string name="dialog_add_title">Joko berria gehitu</string>

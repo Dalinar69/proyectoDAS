@@ -4,7 +4,7 @@
     <string name="slogan_inicio">Tu ludoteca en tu bolsillo</string>
 
     <string name="acerca_de_titulo">Acerca de TABLER</string>
-    <string name="acerca_de_mensaje">Gestor de Juegos de Mesa v1.0\n\nDesarrollado para el proyecto de clase.\n\n¡Gracias por usarla!</string>
+    <string name="acerca_de_mensaje">TABLER es un gestor avanzado de juegos de mesa.\n\nDesarrollado por Iker Argulo para el proyecto de la asignatura Desarrollo Avanzado de Software (DAS).\n\n¡Gracias por utilizar la aplicación!</string>
     <string name="btn_cerrar">Cerrar</string>
 
     <string name="dialog_add_title">Añadir nuevo juego</string>

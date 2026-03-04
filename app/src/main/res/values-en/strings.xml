@@ -4,7 +4,7 @@
     <string name="slogan_inicio">Your board games in your pocket</string>
 
     <string name="acerca_de_titulo">About TABLER</string>
-    <string name="acerca_de_mensaje">Board Game Manager v1.0\n\nDeveloped for the class project.\n\nThanks for using it!</string>
+    <string name="acerca_de_mensaje">TABLER is an advanced board game manager.\n\nDeveloped by Iker Argulo for the Advanced Software Development (DAS) course project.\n\nThank you for using the app!</string>
     <string name="btn_cerrar">Close</string>
 
     <string name="dialog_add_title">Add new game</string>

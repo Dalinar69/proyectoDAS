@@ -18,7 +18,7 @@
         android:id="@+id/etNuevoNombre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Ej: Tete Jugón"
+        android:hint="Ej: Drizzt"
         android:inputType="textPersonName"
         android:textColorHint="#CCCCCC"
         android:textColor="#FFFFFF"

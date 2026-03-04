@@ -43,7 +43,7 @@ public class DetalleActivity extends AppCompatActivity {
 
         // 2.1 Intent implicito
         btnBuscarWeb.setOnClickListener(v -> {
-            // Cogemos el nombre del juego que estás viendo
+            // Obtenemos el nombre del juego actual
             String nombreBuscado = etNombre.getText().toString();
 
             // Creamos la URL de búsqueda en Google
@@ -86,7 +86,7 @@ public class DetalleActivity extends AppCompatActivity {
         });
 
         // --- SELECCIÓN DE FECHA CON CALENDARIO NATIVO ---
-        // Hacemos que no se pueda escribir a mano con el teclado
+        // Bloqueamos la entrada manual de texto para usar solo el calendario
         etFecha.setFocusable(false);
         etFecha.setClickable(true);
 
@@ -101,7 +101,7 @@ public class DetalleActivity extends AppCompatActivity {
             android.app.DatePickerDialog datePickerDialog = new android.app.DatePickerDialog(
                     DetalleActivity.this,
                     (view, year1, monthOfYear, dayOfMonth) -> {
-                        // Cuando el usuario elige fecha, le damos el formato dd/mm/aaaa y lo ponemos en el cajetín
+                        // Formateamos la fecha seleccionada a dd/mm/aaaa y la asignamos al EditText
                         String fechaFormateada = String.format(java.util.Locale.getDefault(), "%02d/%02d/%04d", dayOfMonth, (monthOfYear + 1), year1);
                         etFecha.setText(fechaFormateada);
                     },
@@ -122,7 +122,7 @@ public class DetalleActivity extends AppCompatActivity {
 
             // Lógica de borrado o movimiento
             if (!esWishlist && !loTengo) {
-                // Estás en Ludoteca y dices que ya NO lo tienes -> BORRAR
+                // Si el juego está en Ludoteca y se desmarca la propiedad, se elimina el registro
                 dbHelper.eliminarJuego(idJuegoActual);
                 Toast.makeText(this, getString(R.string.toast_eliminado), Toast.LENGTH_SHORT).show();
             } else {

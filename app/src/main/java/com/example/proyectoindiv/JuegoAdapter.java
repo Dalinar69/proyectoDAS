@@ -50,7 +50,7 @@ public class JuegoAdapter extends RecyclerView.Adapter<JuegoAdapter.JuegoViewHol
             holder.ivCaratula.setImageResource(imageResId);
         } else {
             holder.ivCaratula.setImageResource(R.drawable.pordefecto);
-            holder.ivCaratula.setScaleType(android.widget.ImageView.ScaleType.FIT_CENTER); // Para que no se corte el dibujoh
+            holder.ivCaratula.setScaleType(android.widget.ImageView.ScaleType.FIT_CENTER); // Para que no se corte el dibujo
         }
         // -----------------------------
 
@@ -59,7 +59,7 @@ public class JuegoAdapter extends RecyclerView.Adapter<JuegoAdapter.JuegoViewHol
             // Creamos un Intent para viajar a la DetalleActivity
             android.content.Intent intent = new android.content.Intent(v.getContext(), DetalleActivity.class);
 
-            // Le pasamos los datos del juego en la "mochila" del Intent
+            // Pasamos los datos del juego mediante extras en el Intent
             intent.putExtra("ID_JUEGO", juegoActual.getId());
             intent.putExtra("NOMBRE_JUEGO", juegoActual.getNombre());
             intent.putExtra("JUGADORES_JUEGO", juegoActual.getJugadores());

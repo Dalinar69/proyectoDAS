@@ -123,7 +123,7 @@ public class InicioActivity extends AppCompatActivity {
 
                         // ---  ACCIÓN 1: BOTÓN "A JUGAR" ---
                         android.content.Intent intentJugar = new android.content.Intent(this, DetalleActivity.class);
-                        // Llenamos la mochila con TODOS los datos del juego
+                        // Pasamos los datos a la actividad mediante extras.
                         intentJugar.putExtra("ID_JUEGO", juego.getId());
                         intentJugar.putExtra("NOMBRE_JUEGO", juego.getNombre());
                         intentJugar.putExtra("JUGADORES_JUEGO", juego.getJugadores());
@@ -151,7 +151,7 @@ public class InicioActivity extends AppCompatActivity {
                                 android.app.PendingIntent.FLAG_UPDATE_CURRENT | android.app.PendingIntent.FLAG_IMMUTABLE
                         );
 
-                        // --- 🛠CONSTRUIR NOTIFICACIÓN CON BOTONES ---
+                        // --- CONSTRUIR NOTIFICACIÓN CON BOTONES ---
                         androidx.core.app.NotificationCompat.Builder builder = new androidx.core.app.NotificationCompat.Builder(this, "CANAL_LUDOTECA")
                                 .setSmallIcon(android.R.drawable.ic_dialog_info)
                                 .setContentTitle(getString(R.string.noti_titulo))

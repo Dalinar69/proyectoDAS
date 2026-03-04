@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        // Qué pasa al tocar una opción del menú
+        // Gestión de eventos de navegación del menú lateral
         navView.setNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.nav_ludoteca) {
                 cambiarModo(1);
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         // 3. Inicializamos la base de datos y obtenemos la lista de juegos
         dbHelper = new DatabaseHelper(this);
 
-        // Leemos qué botón pulsaste en la pantalla de inicio
+        // Recuperación del modo de vista desde el Intent
         modoLista = getIntent().getIntExtra("MODO_LISTA", 1);
         cambiarModo(modoLista);
 
@@ -142,14 +142,15 @@ public class MainActivity extends AppCompatActivity {
                     etNombre.setError(getString(R.string.error_duplicado));
                     return; // Cortamos aquí para que no se guarde
                 }
-                // Si llega aquí, es que todo está OK
+                // Inserción del nuevo registro si supera las validaciones
+                // Inserción del nuevo registro si supera las validaciones
                 int duracion = Integer.parseInt(duracionStr);
                 android.content.ContentValues values = new android.content.ContentValues();
                 values.put(DatabaseHelper.COLUMN_NOMBRE, nombre);
                 values.put(DatabaseHelper.COLUMN_JUGADORES, jugadores);
                 values.put(DatabaseHelper.COLUMN_DURACION, duracion);
 
-                // Lo que hablamos: Si es Ludoteca (1), nace con el switch encendido (1)
+                // Asignar estado de 'jugado' por defecto según el modo de lista.
                 values.put(DatabaseHelper.COLUMN_JUGADO, modoLista == 1 ? 1 : 0);
                 values.put(DatabaseHelper.COLUMN_PROPIEDAD, modoLista);
                 values.put(DatabaseHelper.COLUMN_FECHA, "");

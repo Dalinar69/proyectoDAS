@@ -8,7 +8,7 @@ import androidx.core.app.NotificationManagerCompat;
 public class CancelarNotificacionReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        // Pillamos el ID de la notificación que queremos borrar
+        // Recuperamos el ID de la notificación desde el Intent
         int notificationId = intent.getIntExtra("ID_NOTIFICACION", -1);
 
         if (notificationId != -1) {

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+
 import java.util.List;
 
 public class InicioActivity extends AppCompatActivity {
@@ -15,6 +17,7 @@ public class InicioActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         setContentView(R.layout.activity_inicio);
 
         dbHelper = new DatabaseHelper(this);

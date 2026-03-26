@@ -60,4 +60,24 @@
     <string name="menu_exportar">TXT-ra esportatu</string>
     <string name="toast_exportado">Bilduma mi_coleccion.txt-ra esportatu da</string>
     <string name="toast_error_exportar">Errorea esportatzean</string>
+
+    <string name="hint_email">Posta elektronikoa</string>
+    <string name="hint_password">Pasahitza</string>
+    <string name="btn_iniciar_sesion">HASI SAIOA</string>
+    <string name="btn_registrarse">ERREGISTRATU</string>
+    <string name="instrucciones_login">Sartu zure kredentzialak hodeian sartzeko edo erregistratzeko.</string>
+
+    <string name="menu_perfil">Nire Profila</string>
+
+    <string name="btn_sacar_foto">ATERA ARGAZKIA</string>
+    <string name="btn_eliminar_foto">Argazkia ezabatu</string>
+    <string name="label_email">Posta elektronikoa:</string>
+    <string name="label_nombre_usuario">Erabiltzaile-izena:</string>
+    <string name="btn_guardar_cambios">GORDE ALDAKETAK</string>
+    <string name="error_permiso_camara">Kameraren baimena ukatuta</string>
+    <string name="toast_perfil_actualizado">Profila ondo eguneratu da</string>
+    <string name="toast_error_servidor">Errorea zerbitzariari konektatzean</string>
+    <string name="toast_error_bd">Errorea datu-basean gordetzean</string>
+    <string name="toast_error_procesando">Errorea zerbitzariaren datuak prozesatzean</string>
+
 </resources>

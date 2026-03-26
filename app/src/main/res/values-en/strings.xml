@@ -61,4 +61,23 @@
     <string name="toast_exportado">Collection exported to mi_coleccion.txt</string>
     <string name="toast_error_exportar">Error exporting</string>
 
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="btn_iniciar_sesion">LOG IN</string>
+    <string name="btn_registrarse">SIGN UP</string>
+    <string name="instrucciones_login">Enter your credentials to access or register in the cloud.</string>
+
+    <string name="menu_perfil">My Profile</string>
+
+    <string name="btn_sacar_foto">TAKE PHOTO</string>
+    <string name="btn_eliminar_foto">Delete photo</string>
+    <string name="label_email">Email:</string>
+    <string name="label_nombre_usuario">Username:</string>
+    <string name="btn_guardar_cambios">SAVE CHANGES</string>
+    <string name="error_permiso_camara">Camera permission denied</string>
+    <string name="toast_perfil_actualizado">Profile updated successfully</string>
+    <string name="toast_error_servidor">Error connecting to server</string>
+    <string name="toast_error_bd">Error saving to database</string>
+    <string name="toast_error_procesando">Error processing server data</string>
+
 </resources>

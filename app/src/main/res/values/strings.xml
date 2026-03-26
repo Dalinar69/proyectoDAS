@@ -60,4 +60,23 @@
     <string name="menu_exportar">Exportar a TXT</string>
     <string name="toast_exportado">Colección exportada a mi_coleccion.txt</string>
     <string name="toast_error_exportar">Error al exportar</string>
+
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="btn_iniciar_sesion">INICIAR SESIÓN</string>
+    <string name="btn_registrarse">REGISTRARSE</string>
+    <string name="instrucciones_login">Introduce tus credenciales para acceder o registrarte en la nube.</string>
+
+    <string name="menu_perfil">Mi Perfil</string>
+    <string name="btn_sacar_foto">SACAR FOTO</string>
+    <string name="btn_eliminar_foto">Eliminar foto</string>
+    <string name="label_email">Email:</string>
+    <string name="label_nombre_usuario">Nombre de usuario:</string>
+    <string name="btn_guardar_cambios">GUARDAR CAMBIOS</string>
+    <string name="error_permiso_camara">Permiso de cámara denegado</string>
+    <string name="toast_perfil_actualizado">Perfil actualizado correctamente</string>
+    <string name="toast_error_servidor">Error conectando al servidor</string>
+    <string name="toast_error_bd">Error al guardar en la base de datos</string>
+    <string name="toast_error_procesando">Error procesando los datos del servidor</string>
+
 </resources>

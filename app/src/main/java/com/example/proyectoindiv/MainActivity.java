@@ -1,5 +1,6 @@
 package com.example.proyectoindiv;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -63,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
                 cambiarModo(1);
             } else if (item.getItemId() == R.id.nav_wishlist) {
                 cambiarModo(0);
+            } else if (item.getItemId() == R.id.nav_perfil) {
+                // Abrir pantalla de perfil
+                Intent intent = new Intent(MainActivity.this, PerfilActivity.class);
+                startActivity(intent);
             } else if (item.getItemId() == R.id.nav_exportar) {
                 exportarColeccionTXT();
             } else if (item.getItemId() == R.id.nav_es) {
@@ -264,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         recargarLista();
-        }
+    }
 
     // Método para cambiar el idioma de la aplicación en tiempo de ejecución.
     private void cambiarIdioma(String codigoIdioma) {

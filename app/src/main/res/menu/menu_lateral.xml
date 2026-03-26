@@ -5,23 +5,36 @@
         <item
             android:id="@+id/nav_ludoteca"
             android:icon="@android:drawable/ic_menu_gallery"
-            android:title="@string/menu_ludoteca" /> <item
-        android:id="@+id/nav_wishlist"
-        android:icon="@android:drawable/ic_menu_agenda"
-        android:title="@string/menu_wishlist" /> </group>
-
-    <item android:title="@string/menu_ajustes_idioma"> <menu>
+            android:title="@string/menu_ludoteca" />
         <item
-            android:id="@+id/nav_es"
-            android:title="@string/idioma_es" /> <item
-        android:id="@+id/nav_en"
-        android:title="@string/idioma_en" /> <item
-        android:id="@+id/nav_eu"
-        android:title="@string/idioma_eu" /> <item
+            android:id="@+id/nav_wishlist"
+            android:icon="@android:drawable/ic_menu_agenda"
+            android:title="@string/menu_wishlist" />
+    </group>
+
+    <item android:title="@string/menu_ajustes_idioma">
+        <menu>
+            <item
+                android:id="@+id/nav_es"
+                android:title="@string/idioma_es" />
+            <item
+                android:id="@+id/nav_en"
+                android:title="@string/idioma_en" />
+            <item
+                android:id="@+id/nav_eu"
+                android:title="@string/idioma_eu" />
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/nav_perfil"
+        android:icon="@android:drawable/ic_menu_camera"
+        android:title="@string/menu_perfil" />
+
+    <item
         android:id="@+id/nav_acerca_de"
         android:icon="@android:drawable/ic_menu_info_details"
-        android:title="@string/menu_acerca_de" /> </menu>
-    </item>
+        android:title="@string/menu_acerca_de" />
 
     <item
         android:id="@+id/nav_exportar"

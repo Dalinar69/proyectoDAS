@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo"
+    android:backgroundTint="#B3000000"
+    android:backgroundTintMode="src_atop"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="32dp"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/menu_perfil"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:shadowColor="#000000"
+            android:shadowDx="4"
+            android:shadowDy="4"
+            android:shadowRadius="8"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="24dp"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="75dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#44FFFFFF">
+
+            <ImageView
+                android:id="@+id/ivFotoPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@android:drawable/ic_menu_camera"
+                android:scaleType="centerCrop"/>
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/btnTomarFoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_sacar_foto"
+            android:backgroundTint="#E76F51"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvEliminarFoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_eliminar_foto"
+            android:textColor="#CCCCCC"
+            android:textSize="14sp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_email"
+            android:textColor="#AAAAAA"
+            android:textSize="14sp"
+            android:layout_marginStart="4dp"/>
+
+        <TextView
+            android:id="@+id/tvEmailPerfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="cargando..."
+            android:textColor="#E0E0E0"
+            android:textSize="18sp"
+            android:textStyle="italic"
+            android:padding="12dp"
+            android:background="#22FFFFFF"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_nombre_usuario"
+            android:textColor="#AAAAAA"
+            android:textSize="14sp"
+            android:layout_marginStart="4dp"/>
+
+        <EditText
+            android:id="@+id/etNombrePerfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#FFFFFF"
+            android:padding="12dp"
+            android:textSize="18sp"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="32dp"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btnGuardarPerfil"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:text="@string/btn_guardar_cambios"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:backgroundTint="#2A9D8F"
+            android:textColor="#FFFFFF"
+            android:elevation="8dp"
+            android:layout_marginBottom="16dp"/>
+
+    </LinearLayout>
+</RelativeLayout>
